@@ -1,0 +1,51 @@
+from news.models import *
+u1 = User.objects.create_user('Грин')
+u2 = User.objects.create_user('Не Грин')
+
+a1 = Author.objects.create(user=u1)
+a2 = Author.objects.create(user=u2)
+
+cat1 = Category.objects.create(category='Спорт')
+cat2 = Category.objects.create(category='Отдых')
+cat3 = Category.objects.create(category='Еда')
+cat4 = Category.objects.create(category='Технологии')
+
+p1 = Post.objects.create(author=a1, title='title1', text='text1', type=Post.article)
+PostCategory.objects.create(post=p1, category=cat1)
+PostCategory.objects.create(post=p1, category=cat4)
+
+p2 = Post.objects.create(author=a2, title='title2', text='text2', type=Post.article)
+PostCategory.objects.create(post=p2, category=cat2)
+PostCategory.objects.create(post=p2, category=cat3)
+
+p3 = Post.objects.create(author=a1, title='title3', text='text3', type=Post.news)
+PostCategory.objects.create(post=p3, category=cat3)
+PostCategory.objects.create(post=p3, category=cat4)
+
+c1 = Comment.objects.create(text='коммент1', post=p1, user=a1.user)
+c2 = Comment.objects.create(text='коммент2', post=p1, user=a2.user)
+
+c3 = Comment.objects.create(text='коммент3', post=p2, user=a1.user)
+c4 = Comment.objects.create(text='коммент4', post=p2, user=a2.user)
+
+c5 = Comment.objects.create(text='коммент5', post=p3, user=a1.user)
+c6 = Comment.objects.create(text='коммент6', post=p3, user=a2.user)
+
+p1.dislike()
+p2.like()
+
+c1.like()
+c2.dislike()
+c3.like()
+c4.like()
+c5.dislike
+
+a1.update_rating()
+a2.update_rating()
+
+search_request1 = Author.objects.all().order_by('-rating').first()
+Author.objects.filter(id=search_request1.id).values('user__username', 'rating').first()
+search_request2 = Post.objects.get(author_id=search_request1)
+Post.objects.filter(id=search_request2.id).values('author__user__date_joined', 'author__user__username', 'rating', 'title')
+search_request2.preview()
+Comment.objects.filter(post_id=search_request2).values('date', 'user', 'rating', 'text')
