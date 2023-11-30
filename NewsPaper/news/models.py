@@ -32,6 +32,9 @@ class Author(models.Model):
 class Category(models.Model):
     category = models.CharField(max_length=100, unique=True)
 
+    def __str__(self):
+        return f'{self.category.title()}'
+
 
 class Post(models.Model):
     article = 'AR'
@@ -60,6 +63,9 @@ class Post(models.Model):
     def preview(self):
         return f'{self.text[0:124]}...'
     
+    def __str__(self):
+        return f'''{self.title.title()}'''
+    
 
 
 class PostCategory(models.Model):
@@ -81,3 +87,7 @@ class Comment(models.Model):
     def dislike(self):
         self.rating = int(self.rating) - 1 if self.rating > 0 else - 0
         self.save()
+
+
+class SwearWords(models.Model):
+    word = models.TextField()
