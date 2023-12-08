@@ -8,6 +8,7 @@ Post
 
 <!-- В контенте на странице мы выводим сам товар, идентификатор которого был передан в url -->
 {% block content %}
+<a href="/posts/">Вернуться ко всем постам</a>
 <h1>
     {{ post.title|censor }}
     <hr>
@@ -15,7 +16,8 @@ Post
     <h1>{{ post.text|censor }}</h1>
     <h1>Автор:{{ post.author.user.username }}</h1>
     <h1>Рейтинг:{{ post.rating }}</h1>
-
+    <a href="/posts/{{ post.id }}/edit/">Редактировать пост</a>
+    <a href="/posts/{{ post.id }}/delete/">Удалить пост</a>
 
 </h1>
 {% endblock content %}

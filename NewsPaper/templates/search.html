@@ -1,11 +1,44 @@
-{% extends 'flatpages/default.html' %}
+{% extends 'flatpages/default.html' %} 
+{% load custom_filters %}
+{% load custom_tags %}
+
+{% block title %}
+Posts
+{% endblock title %}
+ 
+<!-- В контенте на странице мы выводим все посты -->
 
 {% block content %}
-<h1>Удаление товара</h1>
-<hr>
-<form action="" method="post">
-    {% csrf_token %}
-    <p>Удаляем "{{ object.name }}"?</p>
-    <input type="submit" value="Delete" />
-</form>
-{% endblock content %}
+<a href="/posts/">Вернуться ко всем постам</a>
+   <h1>Всего постов: {{ posts|length }}</h1>
+   
+   {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
+   <form action="" method="get">
+       {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
+       {{ filterset.form.as_p }}
+       {# Добавим кнопку отправки данных формы #}
+       <input type="submit" value="Найти" />
+   </form>
+
+   <hr>
+   {% if posts %}
+       <table>
+           <tr>
+               <td>Заголовок</td>
+               <td>Дата</td>
+               <td>Текст</td>
+           </tr>
+
+           {% for post in posts %}
+           <tr>
+            <td><a href="/posts/{{ post.id }}"> {{ post.title|censor }}</a></td>
+               <td>{{ post.time|date:'d M Y' }}</td>
+               <td>{{ post.text|censor|truncatewords:20 }}</td>
+           </tr>
+           {% endfor %}
+
+       </table>
+   {% else %}
+       <h2>Постов нет!</h2>
+   {% endif %}
+{% endblock %}

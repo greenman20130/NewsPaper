@@ -11,15 +11,9 @@ Posts
 
 {% block content %}
    <h1>Всего постов: {{ posts|length }}</h1>
-   
-   {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
-   <form action="" method="get">
-       {# Переменная, которую мы передали через контекст, может сгенерировать нам форму с полями #}
-       {{ filterset.form.as_p }}
-       {# Добавим кнопку отправки данных формы #}
-       <input type="submit" value="Найти" />
-   </form>
-
+   <a href="/posts/search">Поиск новостей</a>
+   <a href="news/create/">Создать новость</a>
+   <a href="article/create/">Создать статью</a>
    <hr>
    {% if posts %}
        <table>
@@ -31,7 +25,7 @@ Posts
 
            {% for post in posts %}
            <tr>
-               <td>{{ post.title|censor }}</td>
+               <td><a href="/posts/{{ post.id }}"> {{ post.title|censor }}</a></td>
                <td>{{ post.time|date:'d M Y' }}</td>
                <td>{{ post.text|censor|truncatewords:20 }}</td>
            </tr>
