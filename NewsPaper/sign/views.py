@@ -18,3 +18,10 @@ def upgrade_me(request):
     if not request.user.groups.filter(name='author').exists():
         author_group.user_set.add(user)
     return redirect('/')
+
+
+
+
+
+
+
