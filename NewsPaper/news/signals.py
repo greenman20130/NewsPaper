@@ -9,8 +9,8 @@ def send_notifications(preview, pk, title, subscribers):
     html_content = render_to_string(
         'post_created_email.html',
         {
-            'text':preview,
-            'Link':f'{settings.SITE_URL}/posts/{pk}'
+            'text':f'{preview[0:50]}...',
+            'link':f'{settings.SITE_URL}/posts/{pk}'
         }
     )
 
@@ -22,7 +22,7 @@ def send_notifications(preview, pk, title, subscribers):
     )
 
     msg.attach_alternative(html_content, 'text/html')
-    msg.send
+    msg.send()
 
 
 @receiver(m2m_changed, sender=PostCategory)
@@ -32,7 +32,7 @@ def notify_about_new_post(sender, instance, **kwargs):
         subscribers_emails = []
 
         for cat in categories:
-            subscribers += cat.subscribers.all()
+            subscribers = cat.subscribers.all()
             subscribers_emails += [s.email for s in subscribers]
         
         send_notifications(instance.preview(), instance.pk, instance.title, subscribers_emails)

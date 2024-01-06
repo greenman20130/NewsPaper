@@ -7,6 +7,9 @@ class Author(models.Model):
     user = models.OneToOneField(User, on_delete = models.CASCADE)
     rating = models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.user.username
+
     def update_rating(self):
         post_rating = 0 
         comments_rating = 0
@@ -93,6 +96,3 @@ class Comment(models.Model):
         self.rating = int(self.rating) - 1 if self.rating > 0 else - 0
         self.save()
 
-
-class SwearWords(models.Model):
-    word = models.TextField()

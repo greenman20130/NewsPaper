@@ -1,24 +1,24 @@
 from django import forms
 from django.core.exceptions import ValidationError
-
+from datetime import date
 from .models import Post, Category
 
 
 class PostForm(forms.ModelForm):
-    #description = forms.CharField(min_length=20)
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'category': 'category'}), label = 'Категория')
+    
     class Meta:
         model = Post
         fields = ['title', 'text', 'author', 'category']
 
-    """ def clean(self):
-        cleaned_data = super().clean()
-        description = cleaned_data.get("description")
-        name = cleaned_data.get("name")
 
-        if name == description:
-            raise ValidationError(
-                "Описание не должно быть идентично названию."
-            )
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     author = cleaned_data.get("author")
+    #     author_posts_today = Post.objects.filter(time__date=date.today(), author=author).count()
+    #     if author_posts_today >=3:
+    #         raise ValidationError(
+    #             "Нельзя публиковать больше 3х постов в сутки"
+    #         )
 
-        return cleaned_data """
+    #     return cleaned_data

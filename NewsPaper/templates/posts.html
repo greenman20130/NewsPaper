@@ -21,13 +21,20 @@ Posts
                <td>Заголовок</td>
                <td>Дата</td>
                <td>Текст</td>
+               <td>Категория</td>
            </tr>
+           
 
            {% for post in posts %}
            <tr>
                <td><a href="/posts/{{ post.id }}"> {{ post.title|censor }}</a></td>
                <td>{{ post.time|date:'d M Y' }}</td>
                <td>{{ post.text|censor|truncatewords:20 }}</td>
+               <td>
+                {% for category in post.category.all %}
+                    <a href="{% url 'category_list' category.id %}">{{ category }}</a>
+                {% endfor %}
+                </td>
            </tr>
            {% endfor %}
 

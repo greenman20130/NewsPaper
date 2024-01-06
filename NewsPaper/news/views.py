@@ -1,3 +1,4 @@
+from datetime import date
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView, TemplateView
 from .models import Post, Category
@@ -79,13 +80,18 @@ class PostCreate(PermissionRequiredMixin, CreateView):
 
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
-        if '/article/' in self.request.path:
-            type_ = 'AR'
-        elif '/news/' in self.request.path:
-            type_ = 'NE'
-        self.object.type = type_
-        return super().form_valid(form)
+        post = form.save(commit=False)
+        author_posts_today = Post.objects.filter(time__date=date.today(), author=post.author).count()
+        if author_posts_today == 3:
+            return render(self.request, template_name='post_limit.html', context={'author': post.author})
+        else:
+            if '/article/' in self.request.path:
+                type_ = 'AR'
+            elif '/news/' in self.request.path:
+                type_ = 'NE'
+            self.object.type = type_
+            return super().form_valid(form)
+
     
 
 class PostUpdate(PermissionRequiredMixin, LoginRequiredMixin, UpdateView):

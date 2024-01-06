@@ -13,7 +13,8 @@ Posts
     {% if is_not_subscriber %}
         <p class="text-center"><a href="{% url 'subscribe' category.id %}" class="btn btn-secondary btn-sm">Подписаться</a></p>
     {% endif %}
-   <h1>Всего постов: {{ posts|length }}</h1>
+    
+   <h1>Поиск по категории: {{ category }}</h1>
    <a href="/posts/search">Поиск новостей</a>
    <a href="news/create/">Создать новость</a>
    <a href="article/create/">Создать статью</a>
