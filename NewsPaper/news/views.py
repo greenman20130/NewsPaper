@@ -82,15 +82,15 @@ class PostCreate(PermissionRequiredMixin, CreateView):
     def form_valid(self, form):
         post = form.save(commit=False)
         author_posts_today = Post.objects.filter(time__date=date.today(), author=post.author).count()
-        if author_posts_today == 3:
-            return render(self.request, template_name='post_limit.html', context={'author': post.author})
-        else:
+        if author_posts_today <= 3:
             if '/article/' in self.request.path:
                 type_ = 'AR'
             elif '/news/' in self.request.path:
                 type_ = 'NE'
-            self.object.type = type_
+            post.type = type_
             return super().form_valid(form)
+        else:
+            return render(self.request, template_name='post_limit.html', context={'author': post.author})
 
     
 

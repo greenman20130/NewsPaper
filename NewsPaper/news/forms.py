@@ -6,7 +6,6 @@ from .models import Post, Category
 
 class PostForm(forms.ModelForm):
     category = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'category': 'category'}), label = 'Категория')
-    
     class Meta:
         model = Post
         fields = ['title', 'text', 'author', 'category']
