@@ -88,6 +88,7 @@ class PostCreate(PermissionRequiredMixin, CreateView):
             elif '/news/' in self.request.path:
                 type_ = 'NE'
             post.type = type_
+            post.save()
             return super().form_valid(form)
         else:
             return render(self.request, template_name='post_limit.html', context={'author': post.author})
