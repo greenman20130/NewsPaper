@@ -11,13 +11,13 @@ Posts
 
 {% block content %}
    <h1>Всего постов: {{ posts|length }}</h1>
-   <a href="/posts/search">Поиск новостей</a>
+   
    <a href="news/create/">Создать новость</a>
    <a href="article/create/">Создать статью</a>
    <hr>
    {% if posts %}
        <table>
-           <tr>
+            <tr class="{% cycle 'blue' 'white' %}">
                <td>Заголовок</td>
                <td>Дата</td>
                <td>Текст</td>
@@ -26,7 +26,7 @@ Posts
            
 
            {% for post in posts %}
-           <tr>
+           <tr class="{% cycle 'blue' 'white' %}">
                <td><a href="/posts/{{ post.id }}"> {{ post.title|censor }}</a></td>
                <td>{{ post.time|date:'d M Y' }}</td>
                <td>{{ post.text|censor|truncatewords:20 }}</td>

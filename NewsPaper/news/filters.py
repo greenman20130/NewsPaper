@@ -6,11 +6,17 @@ import django_filters
 
 
 class PostFilter(FilterSet):
-    title = django_filters.Filter(field_name='title', lookup_expr='icontains', label='Название')
-    time = django_filters.DateFilter(field_name='time', lookup_expr='gte', widget=DateInput(attrs={'type': 'date'}), label='С')
-    category = django_filters.ModelMultipleChoiceFilter(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple(attrs={'category': 'category'}), label = 'Категория') 
-    author = django_filters.Filter(field_name='author', lookup_expr='icontains', label='Автор')
-    text = django_filters.Filter(field_name='text', lookup_expr='icontains', label='Содержание')
+    title = django_filters.Filter(
+        field_name='title', lookup_expr='icontains', label='Название')
+    time = django_filters.DateFilter(
+        field_name='time', lookup_expr='gte', widget=DateInput(attrs={'type': 'date'}), label='С')
+    category = django_filters.ModelMultipleChoiceFilter(queryset=Category.objects.all(
+    ), widget=forms.CheckboxSelectMultiple(attrs={'category': 'category'}), label='Категория')
+    author = django_filters.Filter(
+        field_name='author', lookup_expr='icontains', label='Автор')
+    text = django_filters.Filter(
+        field_name='text', lookup_expr='icontains', label='Содержание')
+
     class Meta:
         model = Post
         fields = {
