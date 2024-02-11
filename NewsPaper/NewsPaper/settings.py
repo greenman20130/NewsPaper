@@ -31,7 +31,7 @@ load_dotenv(dotenv_path=env_path)
 SECRET_KEY = 'django-insecure-+fih#+-1_b2%h39rlbrj^pce!o3857)65nt-^^$7g*f7n6*kk#'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1']
 
@@ -69,12 +69,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
+    'django.middleware.locale.LocaleMiddleware',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     'allauth.account.middleware.AccountMiddleware',
 ]
 
 ROOT_URLCONF = 'NewsPaper.urls'
+
 
 TEMPLATES = [
     {
@@ -162,6 +163,10 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 LOGIN_URL = '/accounts/login/'
 
 LOGIN_REDIRECT_URL = '/'
+
+LOCALE_PATH = {
+    os.path.join(BASE_DIR, 'locale')
+}
 
 
 ACCOUNT_EMAIL_REQUIRED = True
