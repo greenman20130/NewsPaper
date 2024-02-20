@@ -2,6 +2,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
 from django.core.cache import cache
+from django.utils.translation import pgettext_lazy
+from django.utils.translation import gettext as _
 
 
 class Author(models.Model):
@@ -35,7 +37,7 @@ class Author(models.Model):
 
 
 class Category(models.Model):
-    category = models.CharField(max_length=100, unique=True)
+    category = models.CharField(max_length=100, unique=True, help_text=_('category name'))
     subscribers = models.ManyToManyField(User, null=True, blank=True, related_name='categories')
 
     def __str__(self):
@@ -101,3 +103,12 @@ class Comment(models.Model):
         self.rating = int(self.rating) - 1 if self.rating > 0 else - 0
         self.save()
 
+
+class MyModel(models.Model):
+    name = models.CharField(max_length=100)
+    kind = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        related_name='kinds',
+        verbose_name=pgettext_lazy('help text for MyModel model', 'This is the help text'),
+    )
